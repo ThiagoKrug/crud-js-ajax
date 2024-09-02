@@ -13,7 +13,18 @@ function salvarUsuario(event) {
     let inputSenha = document.getElementsByName("senha")[0];
     let senha = inputSenha.value;
 
-    
+    fetch('inserir.php',
+        {
+            method: 'POST',
+            body: JSON.stringify({
+                id_usuario: id_usuario,
+                nome: nome,
+                email: email,
+                senha: senha
+            }),
+            headers: { 'Content-Type': "application/json; charset=UTF-8" }
+        }
+    );
 }
 
 /*function salvarPessoa(event) {
