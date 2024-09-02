@@ -1,8 +1,19 @@
 function salvarUsuario(event) {
+    // parar o comportamento padrão do form
     event.preventDefault();
+    // obtém o input id_usuario
     let inputIDUsuario = document.getElementsByName("id_usuario")[0];
-    let id_usuario = document.getElementsByName("id_usuario")[0].value;
-    console.log(id_usuario.value);
+    // pega o valor do input id_usuario
+    let id_usuario = inputIDUsuario.value;
+
+    let inputNome = document.getElementsByName("nome")[0];
+    let nome = inputNome.value;
+    let inputEmail = document.getElementsByName("email")[0];
+    let email = inputEmail.value;
+    let inputSenha = document.getElementsByName("senha")[0];
+    let senha = inputSenha.value;
+
+    
 }
 
 /*function salvarPessoa(event) {
