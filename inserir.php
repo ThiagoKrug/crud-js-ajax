@@ -4,13 +4,15 @@ require_once "conexao.php";
 $conexao = conectar();
 
 $usuario = json_decode(file_get_contents("php://input"));
-var_dump($usuario);
-
-echo $usuario->id_usuario;
 
 $sql = "INSERT INTO usuario 
-        (id_usuario, nome, email, senha)
+        (nome, email, senha)
         VALUES 
-        ($id_usuario, '$nome', '$email', '$senha')";
+        ('$usuario->nome', 
+         '$usuario->email', 
+         '$usuario->senha')";
 
 executarSQL($conexao, $sql);
+
+$usuario->id_usuario = mysqli_insert_id($conexao);
+echo json_encode($usuario);
