@@ -85,6 +85,12 @@ function salvarUsuario(event) {
     let inputSenha = document.getElementsByName("senha")[0];
     let senha = inputSenha.value;
 
+    cadastrar(id_usuario, nome, email, senha);
+
+    document.getElementsByTagName('form')[0].reset();
+}
+
+function cadastrar(id_usuario, nome, email, senha) {
     fetch('inserir.php',
         {
             method: 'POST',
