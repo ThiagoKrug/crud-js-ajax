@@ -107,3 +107,21 @@ function cadastrar(id_usuario, nome, email, senha) {
         .then(usuario => inserirUsuario(usuario))
         .catch(error => console.log(error));
 }
+
+function alterar(id_usuario, nome, email, senha) {
+    fetch('alterar.php',
+        {
+            method: 'POST',
+            body: JSON.stringify({
+                id_usuario: id_usuario,
+                nome: nome,
+                email: email,
+                senha: senha
+            }),
+            headers: { 'Content-Type': "application/json; charset=UTF-8" }
+        }
+    )
+        .then(response => response.json())
+        .then(usuario => inserirUsuario(usuario))
+        .catch(error => console.log(error));
+}
