@@ -37,6 +37,8 @@ function inserirUsuario(usuario) {
     tdAlterar.appendChild(btnAlterar);
     let tdExcluir = document.createElement('td');
     let btnExcluir = document.createElement('button');
+    btnExcluir.addEventListener("click", excluir, false);
+    btnExcluir.id_usuario = usuario.id_usuario;
     btnExcluir.innerHTML = "Excluir";
     tdExcluir.appendChild(btnExcluir);
     tr.appendChild(tdId);
@@ -47,9 +49,34 @@ function inserirUsuario(usuario) {
     tbody.appendChild(tr);
 }
 
+function excluir(evt) {
+    let id_usuario = evt.currentTarget.id_usuario;
+    let excluir = confirm("Você tem certeza que deseja excluir este usuário?");
+    if (excluir == true) {
+        fetch('excluir.php?id_usuario=' + id_usuario,
+            {
+                method: "GET",
+                headers: { 'Content-Type': "application/json; charset=UTF-8" }
+            }
+        )
+            .then(response => response.json())
+            .then(usuario => preencheForm(usuario))
+            .catch(error => console.log(error));
+    }
+}
+
+function alterarUsuario(usuario) {
+    let tbody = document.getElementById('usuarios');
+    for (const tr of tbody.children) {
+        if (tr.children[0].innerHTML == usuario.id_usuario) {
+            tr.children[1].innerHTML = usuario.nome;
+            tr.children[2].innerHTML = usuario.email;
+        }
+    }
+}
+
 function buscaUsuario(evt) {
     let id_usuario = evt.currentTarget.id_usuario;
-    //console.log(id_usuario);
     fetch('buscaUsuario.php?id_usuario=' + id_usuario,
         {
             method: "GET",
@@ -85,8 +112,11 @@ function salvarUsuario(event) {
     let inputSenha = document.getElementsByName("senha")[0];
     let senha = inputSenha.value;
 
-    cadastrar(id_usuario, nome, email, senha);
-
+    if (id_usuario == "") {
+        cadastrar(id_usuario, nome, email, senha);
+    } else {
+        alterar(id_usuario, nome, email, senha);
+    }
     document.getElementsByTagName('form')[0].reset();
 }
 
@@ -122,6 +152,6 @@ function alterar(id_usuario, nome, email, senha) {
         }
     )
         .then(response => response.json())
-        .then(usuario => inserirUsuario(usuario))
+        .then(usuario => alterarUsuario(usuario))
         .catch(error => console.log(error));
 }
