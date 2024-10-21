@@ -60,8 +60,19 @@ function excluir(evt) {
             }
         )
             .then(response => response.json())
-            .then(usuario => preencheForm(usuario))
+            .then(retorno => excluirUsuario(retorno, id_usuario))
             .catch(error => console.log(error));
+    }
+}
+
+function excluirUsuario(retorno, id_usuario) {
+    if (retorno == true) {
+        let tbody = document.getElementById('usuarios');
+        for (const tr of tbody.children) {
+            if (tr.children[0].innerHTML == id_usuario) {
+                tbody.removeChild(tr);
+            }
+        }
     }
 }
 
